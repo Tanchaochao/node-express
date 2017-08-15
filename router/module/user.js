@@ -37,6 +37,7 @@ router.post("/reg",function(req,res,next){
 });
 
 
+
 //保存信息==录入数据
 //router.post("/setUser",function(req,res,next){
 //	var username=req.body.username;  
