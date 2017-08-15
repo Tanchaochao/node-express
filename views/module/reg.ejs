@@ -1,0 +1,55 @@
+<%- include("../include/css") %>
+<div action="" method="post" id="reg"> 
+	<p><span>用户名</span><input type="text" name="username" placeholder="请输入用户名" value="张三"/></p>
+	<p><span>密码</span><input type="text" name="password" placeholder="请输入用户密码" value="123456"/></p>
+	<p><span>昵称</span><input type="text" name="nikeName" placeholder="请输入昵称" value="生活在别处"/></p>
+	<p><span>年龄</span><input type="text" name="age" placeholder="请输入年龄" value="22"/></p>
+	<button style="padding:2px 5px;">注册</button>
+</div>
+
+<%- include("../include/js") %>
+<script type="text/javascript">
+	$("button").click(function(){
+		var user={
+			username:$("input[name='username']").val(),
+			password:$("input[name='password']").val(),
+			nikeName:$("input[name='nikeName']").val(),
+			age:$("input[name='age']").val()
+		}
+		//如果你数据库里面灭有这个数据  就先运行下面的代码在插入一条数据
+//		db.user.insert({ "username":"张三", "password":"123456", "nikeName":"王八蛋", "age":"22" }); 
+		$.ajax({
+			type:"post",
+			url:"/user/isUse",//是否被使用过的接口
+			data:{
+				username:user.username
+			},
+			async:true,
+			success:function(res){
+				if(res.isUse){//没有使用过可以注册
+					reg();
+				}else{
+					alert("该用户已经被使用！")
+				}
+			},
+			error:function(er){
+				console.log(er)
+			}
+		});
+		//注册的ajax
+		function reg(){
+			$.ajax({
+				type:"post",
+				url:"/user/reg",
+				data:user,
+				async:true,
+				success:function(res){
+					console.log(res);
+				},
+				error:function(er){
+					console.log(er)
+				}				
+			});
+		}
+	});
+</script>

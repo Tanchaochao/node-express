@@ -5,7 +5,10 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
-var router = require('./router');
+var router = require('./router/router');
+
+var database = require("./dao/database");
+database.getConn();
 
 var app = express();
 
